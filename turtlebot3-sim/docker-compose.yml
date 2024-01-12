@@ -1,0 +1,7 @@
+version: "3"
+services: 
+  container:
+    image: compasskctros/turtlebot3-sim:m1
+    ports:
+      - "6080:80"
+    shm_size: "512m"
