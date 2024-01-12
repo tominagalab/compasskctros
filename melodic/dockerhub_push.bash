@@ -1,7 +1,7 @@
 #!/bin/bash
 echo '< compasskctros/melodic:latest push >'
 
-#CONTAINER_NAME=container
+CONTAINER_NAME=container
 IMAGE_NAME=compasskctros/melodic:latest
 
 #マルチアーキテクチャビルド&プッシュ
