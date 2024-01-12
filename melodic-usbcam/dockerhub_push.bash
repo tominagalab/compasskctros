@@ -1,8 +1,8 @@
 #!/bin/bash
-echo '< compasskctros/melodic:latest push >'
+echo '< compasskctros/melodic-usbcam:latest push >'
 
 CONTAINER_NAME=container
-IMAGE_NAME=compasskctros/melodic:latest
+IMAGE_NAME=compasskctros/melodic-usbcam:latest
 
 #マルチアーキテクチャビルド&プッシュ
 #うまくいかない
