@@ -7,4 +7,6 @@ RUN sudo apt update
 RUN sudo apt upgrade -y
 RUN sudo apt install ros-melodic-usb-cam -y
 
+RUN echo 'sudo chown ubuntu:ubuntu /dev/video0' >> .bashrc
+
 USER root

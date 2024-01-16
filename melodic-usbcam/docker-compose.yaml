@@ -6,3 +6,5 @@ services:
     ports:
       - "6080:80"
     shm_size: "512m"
+    devices:
+      - "/dev/video0:/dev/video0"
