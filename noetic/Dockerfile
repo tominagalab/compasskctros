@@ -7,6 +7,7 @@ WORKDIR /home/ubuntu
 
 RUN sudo apt update && sudo apt upgrade -y
 RUN sudo apt install -y nano gedit
+RUN sudo apt install -y ros-noetic-turtlebot3 ros-noetic-turtlebot3-fake
 
 RUN mkdir -p catkin_ws/src
 
@@ -19,5 +20,6 @@ RUN source /opt/ros/noetic/setup.bash && catkin_make
 
 WORKDIR /home/ubuntu
 RUN echo "source /home/ubuntu/catkin_ws/devel/setup.bash" >> .bashrc
+RUN echo "export TURTLEBOT3_MODEL=burger" >> .bashrc
 
 USER root
