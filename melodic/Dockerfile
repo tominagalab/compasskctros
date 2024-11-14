@@ -1,16 +1,31 @@
 FROM tiryoh/ros-desktop-vnc:melodic
 
-#SHELL ["/bin/bash", "-c"]
+SHELL ["/bin/bash", "-c"]
 
-USER ubuntu
+# 2024.11.14時点でユーザとしてログイン処理がなくても良くなった
+# ベースイメージ側でログインユーザ（ubuntu）で作業することになっているのかも（？）
+# USER ubuntu # 不要(2024.11.14)
 WORKDIR /home/ubuntu
 
 RUN sudo apt update && sudo apt upgrade -y
-RUN sudo apt install -y nano
+RUN sudo apt install -y nano gedit
+RUN sudo apt install -y ros-melodic-turtlebot3 ros-melodic-turtlebot3-fake ros-melodic-turtlebot3-gazebo
+RUN sudo apt install -y ros-melodic-gmapping ros-melodic-dwa-local-planner
 
+# make directry "catkin_ws"
 RUN mkdir -p catkin_ws/src
 
-#catkin_init_workspace, catkin_makeコマンドがDockerfileからなぜか使えないので
-#一度コンテナを作成してからcatkin_wsの初期化をしている
+# Important! to catkin workspace
+WORKDIR /home/ubuntu/catkin_ws/src
+RUN source /opt/ros/melodic/setup.bash && catkin_init_workspace
+# Important! to catkin workspace
+WORKDIR /home/ubuntu/catkin_ws
+RUN source /opt/ros/melodic/setup.bash && catkin_make
+
+WORKDIR /home/ubuntu
+RUN echo "source /home/ubuntu/catkin_ws/devel/setup.bash" >> .bashrc
+
+#expose port 80 for vnc 
+EXPOSE 80
 
 USER root
