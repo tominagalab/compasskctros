@@ -7,21 +7,29 @@ SHELL ["/bin/bash", "-c"]
 # USER ubuntu # 不要(2024.11.14)
 WORKDIR /home/ubuntu
 
+# とりあえずアップデート
 RUN sudo apt update && sudo apt upgrade -y
+
+# 念の為エディタのインストール
 RUN sudo apt install -y nano gedit
-RUN sudo apt install -y ros-melodic-turtlebot3 ros-melodic-turtlebot3-fake ros-melodic-turtlebot3-gazebo
-RUN sudo apt install -y ros-melodic-gmapping ros-melodic-dwa-local-planner
+
+# turtlebot3でslamのシミュレーションをするときに必要なパッケージのインストール
+RUN sudo apt install -y ros-melodic-turtlebot3 ros-melodic-turtlebot3-fake ros-melodic-turtlebot3-gazebo ros-melodic-gmapping
+# turtlebot3でnavigationのシミュレーションをするときに必要なパッケージのインストール
+RUN sudo apt install -y ros-melodic-dwa-local-planner
 
 # make directry "catkin_ws"
 RUN mkdir -p catkin_ws/src
 
-# Important! to catkin workspace
+# initialize catkin_ws
 WORKDIR /home/ubuntu/catkin_ws/src
 RUN source /opt/ros/melodic/setup.bash && catkin_init_workspace
-# Important! to catkin workspace
+
+# do catkin_make
 WORKDIR /home/ubuntu/catkin_ws
 RUN source /opt/ros/melodic/setup.bash && catkin_make
 
+# overwrite to ~/.bashrc
 WORKDIR /home/ubuntu
 RUN echo "source /home/ubuntu/catkin_ws/devel/setup.bash" >> .bashrc
 
